@@ -1,0 +1,48 @@
+.netways-thumb-container {
+    margin-top: 20px;
+    display: flex;
+    gap: 20px;
+    font-size: 1.2em;
+    align-items: center;
+}
+
+.netways-thumb-btn {
+    cursor: pointer;
+    border: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 14px;
+    border-radius: 8px;
+    font-size: 1.2em;
+    font-weight: bold;
+    color: white;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.netways-thumb-btn.up {
+    background-color: #28a745;
+}
+
+.netways-thumb-btn.down {
+    background-color: #dc3545;
+}
+
+.netways-thumb-btn.up:hover {
+    background-color: #218838;
+    transform: scale(1.05);
+}
+
+.netways-thumb-btn.down:hover {
+    background-color: #c82333;
+    transform: scale(1.05);
+}
+
+.et-icon {
+    font-family: 'ETmodules';
+}
+
+.netways-thumb-count {
+    font-size: 0.9em;
+}
+
