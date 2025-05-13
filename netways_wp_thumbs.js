@@ -50,7 +50,7 @@ document.addEventListener('DOMContentLoaded', function () {
             const storageKey = 'netways_thumb_' + postId;
 
             if (localStorage.getItem(storageKey)) {
-                alert('You have already voted!');
+		alert(netwaysThumbs.i18n.already_voted);
                 return;
             }
 
@@ -70,8 +70,9 @@ document.addEventListener('DOMContentLoaded', function () {
         	    this.querySelector('.netways-thumb-count').textContent = data.data.new_count;
         	    localStorage.setItem(storageKey, vote);
     	    	} else if (data.data === 'already_voted') {
-        	    alert('Du hast bereits abgestimmt.');
+		    alert(netwaysThumbs.i18n.already_voted);
     	    	} else {
+		    alert(netwaysThumbs.i18n.vote_failed);
         	    console.error('Voting error:', data);
     	    	}
 	    })

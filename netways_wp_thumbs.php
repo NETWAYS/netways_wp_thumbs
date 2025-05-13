@@ -9,6 +9,10 @@ License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Text Domain: netways-wp-thumbs
 */
+function netways_wp_thumbs_load_textdomain() {
+    load_plugin_textdomain('netways-wp-thumbs', false, dirname(plugin_basename(__FILE__)) . '/languages');
+}
+add_action('plugins_loaded', 'netways_wp_thumbs_load_textdomain');
 
 function netways_enqueue_assets() {
     wp_enqueue_script(
@@ -28,11 +32,11 @@ function netways_enqueue_assets() {
 
     wp_localize_script('netways_wp_thumbs_js', 'netwaysThumbs', array(
         'ajax_url' => admin_url('admin-ajax.php'),
-    'n    once' => wp_create_nonce('netways_nonce'),
-    'useE    Tmodules' => $is_divi,
-    'i18n' =    > array(
-        'alread    y_voted' => __('Du hast bereits abgestimmt.', 'netways-wp-thumbs'),
-        'vote_fail    ed'   => __('Es gab ein Problem beim Abstimmen.', 'netways-wp-thumbs'),
+    	'nonce' => wp_create_nonce('netways_nonce'),
+    	'useETmodules' => $is_divi,
+    	'i18n' => array(
+        	'already_voted' => __('Du hast bereits abgestimmt.', 'netways-wp-thumbs'),
+        	'vote_failed'   => __('Es gab ein Problem beim Abstimmen.', 'netways-wp-thumbs'),
         )
     ));
 }
