@@ -65,12 +65,16 @@ document.addEventListener('DOMContentLoaded', function () {
                 body: formData
             })
             .then(res => res.json())
-            .then(data => {
-                if (data.success) {
-                    this.querySelector('.netways-thumb-count').textContent = data.data.new_count;
-                    localStorage.setItem(storageKey, vote);
-                }
-            })
+	    .then(data => {
+    	    	if (data.success) {
+        	    this.querySelector('.netways-thumb-count').textContent = data.data.new_count;
+        	    localStorage.setItem(storageKey, vote);
+    	    	} else if (data.data === 'already_voted') {
+        	    alert('Du hast bereits abgestimmt.');
+    	    	} else {
+        	    console.error('Voting error:', data);
+    	    	}
+	    })
             .catch(err => console.error('Voting failed:', err));
         });
     });

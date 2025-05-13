@@ -6,9 +6,10 @@ A lightweight WordPress plugin that adds thumbs up/down voting to single blog po
 
 - 👍 / 👎 vote buttons
 - Vote counts next to each button
-- LocalStorage prevents multiple votes per user
+- LocalStorage and cookies prevent multiple votes per user
 - Automatically uses Divi (ETmodules) icons when Divi is active
 - Falls back to Font Awesome icons if Divi is not active
+- Supports multiple languages using standard i18n
 
 ## Usage
 

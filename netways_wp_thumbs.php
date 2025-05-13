@@ -28,8 +28,12 @@ function netways_enqueue_assets() {
 
     wp_localize_script('netways_wp_thumbs_js', 'netwaysThumbs', array(
         'ajax_url' => admin_url('admin-ajax.php'),
-        'nonce' => wp_create_nonce('netways_nonce'),
-        'useETmodules' => $is_divi
+    'n    once' => wp_create_nonce('netways_nonce'),
+    'useE    Tmodules' => $is_divi,
+    'i18n' =    > array(
+        'alread    y_voted' => __('Du hast bereits abgestimmt.', 'netways-wp-thumbs'),
+        'vote_fail    ed'   => __('Es gab ein Problem beim Abstimmen.', 'netways-wp-thumbs'),
+        )
     ));
 }
 add_action('wp_enqueue_scripts', 'netways_enqueue_assets');
@@ -62,15 +66,27 @@ function netways_handle_vote() {
     $post_id = intval($_POST['post_id']);
     $vote = $_POST['vote'];
 
-    if ($vote === 'up' || $vote === 'down') {
-        $meta_key = '_netways_thumb_' . $vote;
-        $count = get_post_meta($post_id, $meta_key, true);
-        $count = $count ? intval($count) + 1 : 1;
-        update_post_meta($post_id, $meta_key, $count);
-        wp_send_json_success(array('new_count' => $count));
+    // Simple validation
+    if (!in_array($vote, ['up', 'down'], true)) {
+        wp_send_json_error('Invalid vote');
     }
 
-    wp_send_json_error();
+    // Check for cookie
+    $cookie_key = 'netways_voted_' . $post_id;
+    if (isset($_COOKIE[$cookie_key])) {
+        wp_send_json_error('already_voted');
+    }
+
+    // Update vote count
+    $meta_key = '_netways_thumb_' . $vote;
+    $count = get_post_meta($post_id, $meta_key, true);
+    $count = $count ? intval($count) + 1 : 1;
+    update_post_meta($post_id, $meta_key, $count);
+
+    // Set cookie (valid 1 year)
+    setcookie($cookie_key, $vote, time() + (365 * 24 * 60 * 60), "/");
+
+    wp_send_json_success(array('new_count' => $count));
 }
 add_action('wp_ajax_netways_vote', 'netways_handle_vote');
 add_action('wp_ajax_nopriv_netways_vote', 'netways_handle_vote');

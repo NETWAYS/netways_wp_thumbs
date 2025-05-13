@@ -1,0 +1,11 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: NETWAYS WP Thumbs\n"
+"Language: en_US\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+
+msgid "Du hast bereits abgestimmt."
+msgstr "You have already voted."
+
+msgid "Es gab ein Problem beim Abstimmen."
+msgstr "There was a problem submitting your vote."

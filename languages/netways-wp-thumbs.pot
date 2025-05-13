@@ -1,0 +1,18 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: NETWAYS WP Thumbs\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language-Team: \n"
+"Last-Translator: \n"
+"PO-Revision-Date: 2025-05-13 12:00+0000\n"
+"X-Generator: ChatGPT\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"Language: \n"
+
+#: netways_wp_thumbs.php
+msgid "Du hast bereits abgestimmt."
+msgstr ""
+
+#: netways_wp_thumbs.php
+msgid "Es gab ein Problem beim Abstimmen."
+msgstr ""
