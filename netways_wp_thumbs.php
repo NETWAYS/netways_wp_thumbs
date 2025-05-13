@@ -40,17 +40,17 @@ function netways_display_thumbs() {
         $up = get_post_meta($post->ID, '_netways_thumb_up', true) ?: 0;
         $down = get_post_meta($post->ID, '_netways_thumb_down', true) ?: 0;
 
-        return "
-        <div class='netways-thumb-container' data-post-id='{$post->ID}'>
-            <button class='netways-thumb-btn up' data-vote='up'>
-                <span class='icon-holder' data-icon='up'></span>
-                <span class='netways-thumb-count'>{$up}</span>
-            </button>
-            <button class='netways-thumb-btn down' data-vote='down'>
-                <span class='icon-holder' data-icon='down'></span>
-                <span class='netways-thumb-count'>{$down}</span>
-            </button>
-        </div>";
+	return "
+	<div class='netways-thumb-container' data-post-id='{$post->ID}'>
+    	<button class='netways-thumb-btn up' data-vote='up'>
+        	<span class='icon-holder' data-icon='up'></span>
+        	<span class='netways-thumb-count' data-count='up'>0</span>
+    	</button>
+    	<button class='netways-thumb-btn down' data-vote='down'>
+        	<span class='icon-holder' data-icon='down'></span>
+        	<span class='netways-thumb-count' data-count='down'>0</span>
+    	</button>
+	</div>";
     }
     return '';
 }
@@ -74,4 +74,18 @@ function netways_handle_vote() {
 }
 add_action('wp_ajax_netways_vote', 'netways_handle_vote');
 add_action('wp_ajax_nopriv_netways_vote', 'netways_handle_vote');
+
+function netways_get_vote_counts() {
+    $post_id = intval($_GET['post_id']);
+    $up = get_post_meta($post_id, '_netways_thumb_up', true) ?: 0;
+    $down = get_post_meta($post_id, '_netways_thumb_down', true) ?: 0;
+
+    wp_send_json_success(array(
+        'up' => intval($up),
+        'down' => intval($down)
+    ));
+}
+add_action('wp_ajax_netways_get_votes', 'netways_get_vote_counts');
+add_action('wp_ajax_nopriv_netways_get_votes', 'netways_get_vote_counts');
+
 

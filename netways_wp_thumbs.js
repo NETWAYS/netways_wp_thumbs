@@ -26,6 +26,21 @@ document.addEventListener('DOMContentLoaded', function () {
         el.appendChild(icon);
     });
 
+    document.querySelectorAll('.netways-thumb-container').forEach(container => {
+    const postId = container.dataset.postId;
+
+    fetch(`${netwaysThumbs.ajax_url}?action=netways_get_votes&post_id=${postId}`)
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                container.querySelector('.netways-thumb-count[data-count="up"]').textContent = data.data.up;
+                container.querySelector('.netways-thumb-count[data-count="down"]').textContent = data.data.down;
+            }
+        })
+        .catch(err => console.error('Failed to load vote counts:', err));
+    });
+
+
     // Voting logic
     document.querySelectorAll('.netways-thumb-btn').forEach(button => {
         button.addEventListener('click', function () {
