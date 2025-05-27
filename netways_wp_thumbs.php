@@ -28,7 +28,8 @@ function netways_enqueue_assets() {
         plugin_dir_url(__FILE__) . 'netways_wp_thumbs.css'
     );
 
-    $is_divi = wp_get_theme()->get('Name') === 'Divi';
+    $theme = wp_get_theme();
+    $is_divi = stripos($theme->get('Name'), 'Divi') === 0 || stripos($theme->get_stylesheet(), 'divi') === 0;
 
     wp_localize_script('netways_wp_thumbs_js', 'netwaysThumbs', array(
         'ajax_url' => admin_url('admin-ajax.php'),
