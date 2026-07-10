@@ -1,8 +1,12 @@
 <?php
 /*
 Plugin Name: NETWAYS WP Thumbs
+Plugin URI: https://github.com/NETWAYS/netways-wp-thumbs
 Description: Adds thumbs up/down voting to posts. Uses ETmodules icons if Divi is active, otherwise falls back to Font Awesome.
-Version: 1.0
+Version: 1.0.0
+Requires at least: 6.0
+Requires PHP: 7.4
+Stable tag: 1.0.0
 Author: NETWAYS
 Author URI: https://www.netways.de
 License: GPLv2 or later
@@ -17,7 +21,7 @@ add_action('plugins_loaded', 'netways_wp_thumbs_load_textdomain');
 function netways_enqueue_assets() {
     wp_enqueue_script(
         'netways_wp_thumbs_js',
-        plugin_dir_url(__FILE__) . 'netways_wp_thumbs.js',
+        plugin_dir_url(__FILE__) . 'netways-wp-thumbs.js',
         array('jquery'),
         null,
         true
@@ -25,7 +29,7 @@ function netways_enqueue_assets() {
 
     wp_enqueue_style(
         'netways_wp_thumbs_css',
-        plugin_dir_url(__FILE__) . 'netways_wp_thumbs.css'
+        plugin_dir_url(__FILE__) . 'netways-wp-thumbs.css'
     );
 
     $theme = wp_get_theme();
@@ -46,8 +50,6 @@ add_action('wp_enqueue_scripts', 'netways_enqueue_assets');
 function netways_display_thumbs() {
     if (is_single()) {
         global $post;
-        $up = get_post_meta($post->ID, '_netways_thumb_up', true) ?: 0;
-        $down = get_post_meta($post->ID, '_netways_thumb_down', true) ?: 0;
 
 	return "
 	<div class='netways-thumb-container' data-post-id='{$post->ID}'>
@@ -74,6 +76,11 @@ function netways_handle_vote() {
     // Simple validation
     if (!in_array($vote, ['up', 'down'], true)) {
         wp_send_json_error('Invalid vote');
+    }
+
+    // Only allow voting on real, published posts
+    if (get_post_status($post_id) !== 'publish') {
+        wp_send_json_error('invalid_post');
     }
 
     // Check for cookie
